@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
+
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="top">
+            <h2>DASHBOARD</h2>
+        </div>
+        <ul>
+            <li>
+                <a href="#" onclick="showPage('home')">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('tasks')">
+                    <i class="fas fa-tasks"></i>
+                    My Task
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('vital')">
+                    <i class="fas fa-chart-line"></i>
+                    Vital Task
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('categories')">
+                    <i class="fas fa-folder"></i>
+                    Task Categories
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('settings')">
+                    <i class="fas fa-cog"></i>
+                    Setting
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('help')">
+                    <i class="fas fa-comments"></i>
+                    Help
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showPage('logout')">
+                    <i class="fas fa-power-off"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+    <!-- Main area -->
+    <div class="main">
+                <!-- Header -->
+        <div class="header">
+            <div class="header-tools">
+                <!-- SEARCH -->
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+
+                <!-- NOTIFICATION -->
+
+               <div class="notification-container">
+         <button class="notification" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span id="notificationCount">0</span>
+    </button>
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+        </div>
+
+        <div id="notificationList">
+            <p class="no-notification">
+                No notifications
+            </p>
+        </div>
+    </div>
+</div>
+               <!-- User -->
+     <div class="user">
+    <label for="profilePhoto" class="profile-picture">
+        <i class="fas fa-user" id="userIcon"></i>
+        <img id="profileImage" style="display: none;">
+    </label>
+
+    <input
+        type="file"
+        id="profilePhoto"
+        accept="image/*"
+        style="display: none;"
+    >
+
+    <a href="login.html">
+        <span>
+            Welcome Back, <span id="userName"></span>!
+        </span>
+    </a>
+    </div>
+    </div>
+    </div>
+         
+
+        <!-- Page content -->
+        <div class="content">
+
+            <!-- Home -->
+            <div id="home" class="page">
+
+                <!-- <h1>Home</h1> -->
+                <div class="home-content">
+                   
+                    <!-- CALENDAR -->
+                    <div class="calender">
+                        <header>
+                            <button onclick="prevMonth()">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+
+                            <h2 id="monthYear"></h2>
+                            <button onclick="nextMonth()">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </header>
+
+                        <!-- DAY NAMES -->
+                        <div class="daynames">
+                            <div>Sun</div>
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div>Sat</div>
+                        </div>
+
+                        <!-- DAYS -->
+                        <div class="days" id="calenderDays"></div>
+                    </div>
+                   <div class="home-task-container">
+
+                       <!-- Vital Tasks -->
+          <div class="home-task-column">
+        <h4>
+            <i class="fas fa-exclamation-circle"></i>
+            Vital Tasks
+        </h4>
+
+        <div id="homeVitalTasks" class="home-vital-container"></div>
+    </div>
+
+                     <!-- My Tasks -->
+           <div class="home-task-column">
+        <h4>
+            <i class="fas fa-tasks"></i>
+            My Tasks
+        </h4>
+
+        <div id="homeMyTasks" class="home-mytask-container"></div>
+    </div>
+    </div>
+
+  
+      <div class="bottom-dashboard-row">
+
+                <!-- Task Status -->
+    <div class="task-statistics">
+        <h2>
+            <i class="fas fa-book"></i>
+            Task Status
+        </h2>
+
+        <div class="total-tasks">
+            <span id="totalTaskCount">0</span>
+            <p>Total Tasks</p>
+        </div>
+
+        <div class="task-status-container">
+
+            <div class="status-item">
+                <div class="status-circle not-started">
+                    <span id="notStartedCount">0</span>
+                </div>
+                <p>Not Started</p>
+            </div>
+
+            <div class="status-item">
+                <div class="status-circle in-progress">
+                    <span id="inProgressCount">0</span>
+                </div>
+                <p>In Progress</p>
+            </div>
+
+            <div class="status-item">
+                <div class="status-circle completed">
+                    <span id="completedCount">0</span>
+                </div>
+                <p>Completed</p>
+            </div>
+        </div>
+    </div>
+
+
+                <!-- Weekly Progress -->
+    <div class="weekly-progress">
+        <h2>
+            <i class="fas fa-chart-bar"></i>
+            Weekly Progress
+        </h2>
+
+        <div class="weekly-list">
+
+            <div class="day-row">
+                <span class="day-name">Mon</span>
+                <div class="progress-bar">
+                    <div id="monProgress" class="progress-fill"></div>
+                </div>
+                <span id="monPercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Tue</span>
+                <div class="progress-bar">
+                    <div id="tueProgress" class="progress-fill"></div>
+                </div>
+                <span id="tuePercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Wed</span>
+                <div class="progress-bar">
+                    <div id="wedProgress" class="progress-fill"></div>
+                </div>
+                <span id="wedPercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Thu</span>
+                <div class="progress-bar">
+                    <div id="thuProgress" class="progress-fill"></div>
+                </div>
+                <span id="thuPercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Fri</span>
+                <div class="progress-bar">
+                    <div id="friProgress" class="progress-fill"></div>
+                </div>
+                <span id="friPercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Sat</span>
+                <div class="progress-bar">
+                    <div id="satProgress" class="progress-fill"></div>
+                </div>
+                <span id="satPercent" class="progress-percent">0%</span>
+            </div>
+
+            <div class="day-row">
+                <span class="day-name">Sun</span>
+                <div class="progress-bar">
+                    <div id="sunProgress" class="progress-fill"></div>
+                </div>
+                <span id="sunPercent" class="progress-percent">0%</span>
+            </div>
+        </div>
+    </div>
+    <div class="daily-progress">
+    <h2>
+        <i class="fas fa-calendar-day"></i>
+        Daily Progress
+    </h2>
+
+    <div class="daily-progress-circle">
+        <div class="daily-progress-inner">
+            <span id="dailyProgressPercent">0%</span>
+            <small id="dailyProgressCount">0 / 0</small>
+        </div>
+    </div>
+
+    <div class="daily-progress-info">
+        <p>
+            <i class="fas fa-check-circle"></i>
+            <span id="dailyCompletedCount">0</span>
+            Completed
+        </p>
+
+        <p>
+            <i class="fas fa-clock"></i>
+            <span id="dailyRemainingCount">0</span>
+            Remaining
+        </p>
+       </div>
+       </div>
+       </div>
+     </div>
+    </div>
+              <!-- My Task -->
+               <div id="tasks" class="page">
+              <h1>My Tasks</h1>
+    <button class="create-task-btn" onclick="showTaskForm()">
+        <i class="fas fa-plus"></i>
+        Create Task
+    </button>
+
+              <!-- Task Form -->
+    <div id="taskForm" class="task-form">
+        <h2>Create Task</h2>
+        <input type="text" id="taskName" placeholder="Task Name">
+        <textarea id="taskDescription"
+                  placeholder="Task Description"></textarea>
+        <input type="date" id="taskDate">
+
+        <select id="taskPriority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <label>Status</label>
+
+        <select id="taskStatus">
+    <option value="Not Started">Not Started</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+    </select>
+        <button onclick="saveTask()">Save Task</button>
+    </div>
+
+    <div id="taskList"></div>
+   </div>
+
+
+
+                 <!-- Vital Task -->
+            <div id="vital" class="page">
+            <h1>Vital Tasks</h1>
+        <button class="create-vital-btn" onclick="showVitalTaskForm()">
+             <i class="fas fa-plus"></i>
+             Create Vital Task
+       </button>
+
+
+               <!-- Vital Task Form -->
+          <div id="vitalTaskForm" class="vital-task-form">
+        <h2>Create Vital Task</h2>
+        <input
+            type="text"
+            id="vitalTaskName"
+            placeholder="Vital Task Name"
+        >
+
+        <textarea
+            id="vitalTaskDescription"
+            placeholder="Task Description">
+        </textarea>
+
+        <label>Due Date</label>
+
+        <input
+            type="date"
+            id="vitalTaskDate"
+        >
+
+        <label>Due Time</label>
+
+        <input
+            type="time"
+            id="vitalTaskTime"
+        >   
+
+       <select id="vitalTaskPriority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        </select>
+
+       <label>Status</label>
+
+        <select id="vitalTaskStatus">
+        <option value="Not Started">Not Started</option>
+        <option value="In Progress">In Progress</option>
+         <option value="Completed">Completed</option>
+       </select>
+
+        <button onclick="saveVitalTask()">Save Vital Task</button>
+    </div>
+
+         <!-- Vital Catagories -->
+
+         <!-- Saved Vital Tasks -->
+        <div id="vitalTaskList"></div>
+        </div>
+        <div id="categories" class="page">
+        <h1>Task Categories</h1>
+
+          <!-- Vital Tasks -->
+        <div class="category-container">
+        <h2>
+            <i class="fas fa-exclamation-circle"></i>
+            Vital Tasks
+        </h2>
+
+        <div id="categoryVitalTasks" class="category-task-list">
+        </div>
+      </div>
+
+        <!-- Normal Tasks -->
+        <div class="category-container">
+        <h2>
+            <i class="fas fa-tasks"></i>
+            My Tasks
+        </h2>
+        <div id="categoryNormalTasks" class="category-task-list">
+        </div>
+    </div>
+</div>
+
+
+
+            <!-- Settings -->
+    <div id="settings" class="page">
+    <h1>Settings</h1>
+    <div class="settings-container">
+
+        <!-- Account Information -->
+        <div class="settings-card">
+            <h2>
+                <i class="fas fa-user"></i>
+                Account Information
+            </h2>
+
+            <label>Username</label>
+            <input type="text" id="settingsUsername">
+
+            <label>Email</label>
+            <input type="email" id="settingsEmail">
+
+            <label>Contact Number</label>
+            <input type="tel" id="settingsContact">
+
+            <button onclick="updateAccount()">
+                Save Changes
+            </button>
+        </div>
+
+
+        <!-- Change Password -->
+        <div class="settings-card">
+            <h2>
+                <i class="fas fa-lock"></i>
+                Change Password
+            </h2>
+
+            <label>Current Password</label>
+            <input type="password" id="currentPassword">
+
+            <label>New Password</label>
+            <input type="password" id="newPassword">
+
+            <label>Confirm New Password</label>
+            <input type="password" id="confirmPassword">
+
+            <button onclick="changePassword()">
+                Change Password
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+            <!-- Help & FAQ  -->
+
+          <div id="help" class="page">
+         <h1>Help & FAQ</h1>
+         <div class="faq-container">
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ What is this Task Management System?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    This application helps you create, organize,
+                    track, and manage your daily tasks.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ How do I create a new task?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Go to My Task, click Create Task, enter the
+                    required details, and click Save Task.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ What is a Vital Task?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    A Vital Task is an important or time-sensitive
+                    task that you want to keep separate from your
+                    regular tasks.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ How do I edit a task?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Click the Edit button on the task you want
+                    to modify, update the information, and save it.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ What do the task statuses mean?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Not Started means the task hasn't begun.
+                    In Progress means you are currently working
+                    on it. Completed means the task has been finished.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ Can I delete a task?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. Click the Delete button and confirm
+                    the deletion.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ How can I change my account information?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Go to Settings to update your username,
+                    email, contact information, and password.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                ❓ Where can I see my tasks?
+                <span>+</span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    You can view regular tasks under My Task,
+                    important tasks under Vital Task, and organize
+                    them through Task Categories.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <!-- Logout -->
+         <div id="logout" class="page">
+         <div class="logout-container">
+        <i class="fas fa-sign-out-alt"></i>
+        <h1>Logout</h1>
+        <p>Are you sure you want to logout?</p>
+        <button onclick="logoutUser()">
+            Logout
+        </button>
+    </div>
+    </div>
+    </div>
+
+
+
+
+    <script src="new.js"></script>
+
+</body>
+</html>
