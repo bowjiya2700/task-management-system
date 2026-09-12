@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login / Signup</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <!-- LOGIN -->
+
+        <div class="auth-box">
+
+            <h2>Login</h2>
+
+            <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Username">
+            </div>
+
+            <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password">
+            </div>
+
+            <button onclick="loginUser()">
+                Login
+            </button>
+
+            <p>
+                Don't have an account?
+                <a href="#" onclick="showSignup()">
+                    Signup
+                </a>
+            </p>
+
+        </div>
+
+
+        <!-- SIGNUP -->
+
+        <div class="auth-box signup-box">
+
+            <h2>Signup</h2>
+
+            <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Name">
+            </div>
+
+            <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Email">
+            </div>
+
+            <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input
+                    type="text"
+                    id="signupUsername"
+                    placeholder="Username">
+            </div>
+
+            <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Password">
+            </div>
+
+            <button onclick="signupUser()">
+                Signup
+            </button>
+
+            <p>
+                Already have an account?
+                <a href="#" onclick="showLogin()">
+                    Login
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script src="new.js"></script>
+
+</body>
+</html>
